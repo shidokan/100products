@@ -102,13 +102,19 @@ def retrieve(query: str, top_k: int = TOP_K) -> List[dict]:
 
 
 def format_context(chunks: List[dict]) -> Tuple[str, List[str]]:
-    """Format retrieved chunks into a context block + a citation list."""
+    """Format retrieved chunks into a context block + a citation list.
+
+    The context block (passed to the LLM) keeps numbered prefixes [1], [2], ...
+    The citations list returned to consumers contains just the source names —
+    callers add their own numbering as appropriate (CLI uses '[i]', UI uses
+    a styled tag).
+    """
     context_lines = []
     citations = []
     for i, c in enumerate(chunks, start=1):
         source = c["title"] or c["chunk_id"] or f"source-{i}"
         context_lines.append(f"[{i}] Source: {source}\n{c['chunk']}\n")
-        citations.append(f"[{i}] {source}")
+        citations.append(source)
     return "\n".join(context_lines), citations
 
 
@@ -167,8 +173,8 @@ def main() -> None:
         print("\nAssistant:")
         print(textwrap.fill(reply, width=88))
         print("\nCitations:")
-        for c in citations:
-            print(f"  {c}")
+        for i, c in enumerate(citations, start=1):
+            print(f"  [{i}] {c}")
 
         # keep the last user/assistant turn in history (without the bulky context)
         history.append({"role": "user", "content": question})
