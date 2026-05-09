@@ -39,6 +39,11 @@ EMBED_DEPLOYMENT    = os.getenv("AZURE_OPENAI_EMBED_DEPLOYMENT", "text-embedding
 SEARCH_ENDPOINT     = os.environ["AZURE_SEARCH_ENDPOINT"]            # e.g. https://outlander.search.windows.net
 SEARCH_API_KEY      = os.environ["AZURE_SEARCH_API_KEY"]
 SEARCH_INDEX        = os.getenv("AZURE_SEARCH_INDEX", "outlander-products")
+# Import & Vectorize wizard names the semantic config "<index>-semantic-configuration"
+SEARCH_SEMANTIC_CONFIG = os.getenv(
+    "AZURE_SEARCH_SEMANTIC_CONFIG",
+    f"{SEARCH_INDEX}-semantic-configuration",
+)
 
 TOP_K               = int(os.getenv("TOP_K", "5"))
 SYSTEM_MESSAGE = textwrap.dedent("""
@@ -82,7 +87,7 @@ def retrieve(query: str, top_k: int = TOP_K) -> List[dict]:
         )],
         top=top_k,
         query_type="semantic",
-        semantic_configuration_name="outlander-products-semantic-configuration",
+        semantic_configuration_name=SEARCH_SEMANTIC_CONFIG,
         select=["chunk", "title", "chunk_id"],
     )
     return [

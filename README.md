@@ -6,7 +6,9 @@ A retrieval-augmented chat assistant over a 100-product outdoor-equipment catalo
 
 ## Live demo
 
-🔗 **Demo URL:** _to be added once deployed to personal Azure subscription_
+🔗 **Demo URL:** [https://outlander-rag.wittysand-6ec9ce26.eastus.azurecontainerapps.io](https://outlander-rag.wittysand-6ec9ce26.eastus.azurecontainerapps.io)
+
+> The container scales to zero when idle, so the first request after a period of inactivity may take 5-15 seconds (cold start). Subsequent requests are fast.
 
 Try asking:
 
