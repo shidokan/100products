@@ -1,0 +1,8 @@
+{
+  "items_evaluated": 8,
+  "avg_groundedness": 5.0,
+  "avg_relevance": 5.0,
+  "avg_accuracy": 5.0,
+  "overall_score": 5.0,
+  "results_csv": "outlander_eval_results.csv"
+}
